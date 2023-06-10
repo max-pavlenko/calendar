@@ -93,6 +93,7 @@ export default function Home() {
    const handleSuccessfulImport = ({events, coloredLabels}: ExportValues) => {
       ColoredLabels.setLabelColors = coloredLabels;
       setEvents(events);
+      importFileInputRef.current!.value = "";
    };
 
    const handleEventDrop: EventDropHandler = ({eventOnDropped, currentlyDraggedEvent}) => {

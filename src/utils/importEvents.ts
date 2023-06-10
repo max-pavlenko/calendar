@@ -6,10 +6,13 @@ export type ExportValues = { events: DateEvent[], coloredLabels: ColoredLabelRec
 export function importEvents(file: File, onComplete: (events: ExportValues) => void) {
    const reader = new FileReader();
 
+   console.log('file', file)
+
    reader.addEventListener('load', () => {
       try {
          const json = reader.result as string;
          const data = JSON.parse(json) as ExportValues;
+         console.log(data)
          if (!data.events || !data.coloredLabels) return;
 
          onComplete({...data, events: data.events.map(event => ({...event, date: new Date(event.date)}))});

@@ -1,7 +1,7 @@
-import React, {DragEvent, DragEventHandler, FC, MouseEvent, useEffect, useState} from "react";
+import {DragEvent, DragEventHandler, FC, MouseEvent, useEffect, useState} from "react";
 import {TileArgs} from "react-calendar/src/shared/types";
 import {DateEvent} from "@/types/Event";
-import {isFirstDayOfMonth, isLastDayOfMonth} from "../../dates";
+import {isFirstDayOfMonth, isLastDayOfMonth} from "@/utils/dates";
 import styled from "styled-components";
 import {observer} from "mobx-react-lite";
 import ColoredLabels from "@/store/ColoredLabels";
