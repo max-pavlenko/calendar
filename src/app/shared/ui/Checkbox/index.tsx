@@ -1,36 +1,11 @@
-import styled from "styled-components";
 import {FC, ReactNode, useEffect, useState} from "react";
+import {CheckboxContainer, HiddenCheckbox, StyledCheckbox} from "@/app/shared/ui/Checkbox/styles";
 
 type Props = {
    checked: boolean;
    onChange?: (checked: boolean) => void;
    label?: ReactNode;
 };
-
-const CheckboxContainer = styled.label`
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const HiddenCheckbox = styled.input.attrs({type: "checkbox"})`
-  position: absolute;
-  display: none;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-`;
-
-const StyledCheckbox = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-`;
 
 const Checkbox: FC<Props> = ({checked = false, label, onChange = () => {}}) => {
    const [isChecked, setIsChecked] = useState(checked);

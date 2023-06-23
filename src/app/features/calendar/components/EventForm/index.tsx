@@ -1,62 +1,23 @@
 import {ComponentProps, FormEventHandler, PropsWithChildren, useEffect, useState} from "react";
-import styled from "styled-components";
-import MultiSelectDropdown, {MultiSelectHandler} from "@/components/ui/MultiSelectDropdown";
-import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
-import {DateEvent, TEvent} from "@/types/Event";
 import {observer} from "mobx-react-lite";
 import ColoredLabels from "@/store/ColoredLabels";
-import InlineEditableText from "@/components/ui/InlineEditableText";
+import MultiSelectDropdown, {MultiSelectOptionHandler} from "@/app/shared/ui/MultiSelectDropdown";
+import Input from "@/app/shared/ui/Input";
+import Button from "@/app/shared/ui/Button";
+import InlineEditableText from "@/app/shared/ui/InlineEditableText";
+import {ColorBar, ColorBarsList, ColorSquare, Form, FormControl, HiddenColorInput} from "@/app/features/calendar/components/EventForm/styles";
+import {BaseDateEvent, DateEvent} from "@/types/Events";
 
-export type EventFormHandler<T extends TEvent> = (values: T) => void;
+export type EventFormSubmitHandler<T extends BaseDateEvent> = (values: T) => void;
 
-type Props<T extends TEvent> = {
-   onSubmit: EventFormHandler<T>;
-   defaultValues?: TEvent;
+type Props<T extends BaseDateEvent> = {
+   onSubmit: EventFormSubmitHandler<T>;
+   defaultValues?: BaseDateEvent;
 } & Omit<ComponentProps<"form">, "ref" | "onSubmit">;
 
-const ColorSquare = styled.label`
-  width: 15px;
-  position: relative;
-  height: 15px;
-  border-radius: 4px;
-  padding: 0;
-  border: none;
-  cursor: pointer;
-`;
+const DEFAULT_FORM_VALUES: BaseDateEvent = {labels: [], name: ""};
 
-const FormControl = styled.div`
-  display: grid;
-  gap: 5px;
-`;
-
-const Form = styled.form.attrs(props => ({
-   ...props
-}))`
-  display: grid;
-  gap: 8px;
-`;
-
-const ColorBarsList = styled.ul`
-  display: flex;
-  gap: 3px;
-`;
-
-const ColorBar = styled.li`
-  height: 3px;
-  border-radius: 7px;
-  flex: 1;
-`;
-
-const HiddenColorInput = styled.input`
-  height: 0;
-  width: 0;
-  visibility: hidden;
-`;
-
-const DEFAULT_FORM_VALUES: TEvent = {labels: [], name: ""};
-
-const EventForm = <T extends DateEvent>({ children, defaultValues = DEFAULT_FORM_VALUES, onSubmit, ...props }: PropsWithChildren<Props<T>>) => {
+const EventForm = <T extends DateEvent>({children, defaultValues = DEFAULT_FORM_VALUES, onSubmit, ...props}: PropsWithChildren<Props<T>>) => {
    const [formValues, setFormValues] = useState(defaultValues);
 
    useEffect(() => {
@@ -70,7 +31,7 @@ const EventForm = <T extends DateEvent>({ children, defaultValues = DEFAULT_FORM
       setFormValues(DEFAULT_FORM_VALUES);
    };
 
-   const handleLabelSelect: MultiSelectHandler<string> = ({selectedOptions}) => {
+   const handleLabelSelect: MultiSelectOptionHandler<string> = ({selectedOptions}) => {
       setFormValues(prevState => ({...prevState, labels: selectedOptions}));
    };
 
@@ -96,9 +57,8 @@ const EventForm = <T extends DateEvent>({ children, defaultValues = DEFAULT_FORM
              <MultiSelectDropdown<string>
                  onDeleteOption={(option) => ColoredLabels.removeColoredLabel(option)}
                  onAddOption={() => ColoredLabels.addColoredLabel({color: "#000", label: "Change me!"})}
-                 renderOption={(labelID) => <RenderOption isSelected={formValues.labels.includes(labelID)} labelID={labelID}/>}
+                 renderOption={(labelID) => <RenderSelectLabelOption isSelected={formValues.labels.includes(labelID)} labelID={labelID}/>}
                  options={coloredLabelsIDs} onSelect={handleLabelSelect} preselectedOptions={formValues.labels}/>
-
           </FormControl>
 
           <Button>Save</Button>
@@ -107,7 +67,7 @@ const EventForm = <T extends DateEvent>({ children, defaultValues = DEFAULT_FORM
 };
 export default observer(EventForm);
 
-const RenderOption = ({labelID, isSelected}: { labelID: string, isSelected: boolean }) => {
+const RenderSelectLabelOption = ({labelID, isSelected}: { labelID: string, isSelected: boolean }) => {
    const {color, label} = ColoredLabels.getLabelColors[labelID];
    const [newLabel, setNewLabel] = useState(label);
 
@@ -117,10 +77,9 @@ const RenderOption = ({labelID, isSelected}: { labelID: string, isSelected: bool
        <>
           <InlineEditableText initialText={label} onSubmit={(newLabel) => setNewLabel(newLabel)}/>
           <ColorSquare onClick={e => e.stopPropagation()} style={{backgroundColor: color}}>
-             <HiddenColorInput value={color}
-                               disabled={!isSelected}
+             <HiddenColorInput value={color} disabled={!isSelected}
                                onChange={e => ColoredLabels.editColoredLabel(labelID, {color: e.target.value, label: newLabel})}
-                               type="color"/>
+             />
           </ColorSquare>
        </>
    );

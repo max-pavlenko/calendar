@@ -1,52 +1,17 @@
 import {ReactNode, useEffect, useRef, useState} from "react";
-import styled from "styled-components";
-import Checkbox from "@/components/ui/Checkbox";
+import Checkbox from "@/app/shared/ui/Checkbox";
+import {AddColoredLabelBtn, DeleteBtn, DropdownContainer, Option} from "@/app/shared/ui/MultiSelectDropdown/styles";
 
-export type MultiSelectHandler<T> = ({}: { option: T, selectedOptions: T[] }) => void;
+export type MultiSelectOptionHandler<T> = ({selectedOptions, option}: { option: T, selectedOptions: T[] }) => void;
 
 type Props<T> = {
    options: T[],
-   onSelect?: MultiSelectHandler<T>,
+   onSelect?: MultiSelectOptionHandler<T>,
    renderOption: (option: T) => ReactNode,
    preselectedOptions?: T[],
    onAddOption?: () => void,
    onDeleteOption?: (option: T) => void
 };
-
-const DropdownContainer = styled.div`
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  max-height: 200px;
-  overflow-y: auto;
-`;
-
-const Option = styled.div`
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &:hover > button {
-    opacity: 1;
-  }
-`;
-
-const DeleteBtn = styled.button`
-  background-color: transparent;
-  color: red;
-  opacity: 0;
-  font-size: 18px;
-`
-
-const AddColoredLabelBtn = styled.button`
-  background-color: mistyrose;
-  padding: 5px 10px;
-  font-size: 15px;
-  width: 100%;
-`;
 
 const MultiSelectDropdown = <T extends string>({options, onDeleteOption, preselectedOptions = [], onAddOption, onSelect = () => {}, renderOption}: Props<T>) => {
    const [selectedOptions, setSelectedOptions] = useState<T[]>(preselectedOptions);

@@ -1,7 +1,7 @@
 import {ComponentProps, PropsWithChildren} from 'react'
-import EventForm from "@/components/EventForm";
-import Modal from "@/components/ui/Modal";
-import {DateEvent} from "@/types/Event";
+import {DateEvent} from "@/types/Events";
+import EventForm from "@/app/features/calendar/components/EventForm";
+import Modal from "@/app/shared/ui/Modal";
 
 type Props = {
    isOpen: boolean,

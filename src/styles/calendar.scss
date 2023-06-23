@@ -3,7 +3,7 @@ $light-gray-cyan: #d2d9d7;
 $gray-cyan: #dae7e3;
 $gray: #ccc;
 $dark-gray: #888;
-$current-tile-color: #ffffa9;
+$currentDate-tile-color: #ffffa9;
 $hovered-tile-color: #f9b;
 
 $days-gap: 3px;
@@ -187,7 +187,7 @@ $days-gap: 3px;
     }
 
     &--now {
-      background-color: $current-tile-color !important;
+      background-color: $currentDate-tile-color !important;
     }
 
     &--hasActive {

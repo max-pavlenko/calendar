@@ -1,10 +1,10 @@
 
-export type TEvent = {
+export type BaseDateEvent = {
    labels: string[],
    name: string,
 }
 
-export type DateEvent = TEvent & {
+export type DateEvent = BaseDateEvent & {
    date: Date,
    id: string,
 }

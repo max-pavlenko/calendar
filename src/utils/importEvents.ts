@@ -1,11 +1,10 @@
-import {DateEvent} from "@/types/Event";
-import {ColoredLabelRecord} from "@/types/Label";
+import {DateEvent} from "@/types/Events";
+import {ColoredLabelRecord} from "@/types/Labels";
 
 export type ExportValues = { events: DateEvent[], coloredLabels: ColoredLabelRecord };
 
-export function importEvents(file: File, onComplete: (events: ExportValues) => void) {
+export function importEvents(file: File | Blob, onComplete: (events: ExportValues) => void) {
    const reader = new FileReader();
-
 
    reader.addEventListener('load', () => {
       try {

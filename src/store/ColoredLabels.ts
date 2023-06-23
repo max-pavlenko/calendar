@@ -1,6 +1,6 @@
 import {makeAutoObservable} from 'mobx';
 import {DEFAULT_LABEL_COLORS} from "@/constants/LabelColors";
-import {ColoredLabel, ColoredLabelRecord} from "@/types/Label";
+import {ColoredLabel, ColoredLabelRecord} from "@/types/Labels";
 
 class ColoredLabels {
    labelColors: ColoredLabelRecord = {};

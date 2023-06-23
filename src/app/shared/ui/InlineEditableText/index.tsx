@@ -1,35 +1,11 @@
 import {ChangeEventHandler, FC, FormEventHandler, MouseEventHandler, useState} from 'react'
-import styled from 'styled-components';
 import Image from "next/image";
+import {Button, Container, EditableInput, Text} from "@/app/shared/ui/InlineEditableText/styles";
 
 type Props = {
    initialText?: string,
    onSubmit: (text: string) => void,
 };
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-`;
-
-const Text = styled.span`
-  display: inline-block;
-  font-size: 16px;
-  line-height: 1.5;
-`;
-
-const EditableInput = styled.input`
-  font-size: 16px;
-  width: auto;
-  line-height: 1.5;
-`;
-
-const Button = styled.button`
-  background-color: transparent;
-  padding: 7px;
-  position: relative;
-`
 
 const InlineEditableText: FC<Props> = ({initialText, onSubmit}) => {
    const [text, setText] = useState(initialText || '');
