@@ -1,3 +1,5 @@
+@import "mixins";
+
 $light-gray: #eee;
 $light-gray-cyan: #d2d9d7;
 $gray-cyan: #dae7e3;
@@ -5,6 +7,7 @@ $gray: #ccc;
 $dark-gray: #888;
 $currentDate-tile-color: #ffffa9;
 $hovered-tile-color: #f9b;
+$day-cell-height: 140px;
 
 $days-gap: 3px;
 
@@ -15,7 +18,7 @@ $days-gap: 3px;
   width: 100%;
   max-width: 100%;
   background: $light-gray;
-  border: 1px solid #a0a096;
+  border: 1px solid $gray;
   line-height: 1.125em;
   padding: $days-gap;
   border-radius: 4px;
@@ -39,12 +42,12 @@ $days-gap: 3px;
     }
 
     &:disabled {
-      background-color: #f0f0f0;
+      background-color: $light-gray;
     }
 
     &:enabled:hover,
     &:enabled:focus {
-      background-color: #e6e6e6;
+      background-color: $light-gray;
     }
   }
 
@@ -60,7 +63,7 @@ $days-gap: 3px;
     }
 
     &__arrow {
-      background: #ddd !important;
+      background: lighten($light-gray-cyan, 4%) !important;
       border-radius: 7px;
       padding: 2px !important;
       font-size: 16px;
@@ -128,13 +131,18 @@ $days-gap: 3px;
       display: grid !important;
       grid-template-columns: repeat(7, 1fr);
       grid-template-rows: repeat(6, minmax(6.3em, 1fr));
+
       &__day {
-        flex-basis: auto !important;
         display: flex;
         justify-content: flex-start;
         gap: 4px;
         padding: 0 !important;
         flex-direction: column;
+        height: $day-cell-height;
+        overflow-y: auto !important;
+        scrollbar-gutter: stable;
+
+        @include scrollbar(rgba(0, 0, 0, 0.08));
 
         &:not(&--neighboringMonth) > * {
           color: black;

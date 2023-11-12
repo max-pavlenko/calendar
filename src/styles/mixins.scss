@@ -1,0 +1,14 @@
+@mixin scrollbar($bg: linear-gradient(45deg, var(--red), var(--orange), var(--orange), var(--red))) {
+  &::-webkit-scrollbar {
+    width: 7px;
+
+    &-track {
+      background: $bg;
+    }
+
+    &-thumb {
+      background: var(--blue);
+      border-radius: 3px;
+    }
+  }
+}
